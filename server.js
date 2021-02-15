@@ -29,7 +29,7 @@ app.post('/api/shorturl/new', (req, res)=>{
   let validate = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
   let result = validate.test(url)
   if(result){
-    res.json({ original_url: url, short_url: "id" });
+    res.json({ original_url: url, short_url: 1 });
   } else {
     res.json({ error: "invalid url" });
   }
