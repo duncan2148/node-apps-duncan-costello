@@ -32,7 +32,7 @@ app.post('/api/shorturl/new', (req, res)=>{
     return Math.floor(Math.random() * 10)
   }
   if(result){
-    res.json({ "original_url": url, "short_url": id() });
+    res.json({ original_url: url, short_url: id() });
   } else {
     res.json({ "error": "invalid url" });
   }
