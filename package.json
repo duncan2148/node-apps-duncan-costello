@@ -16,5 +16,9 @@
   "license": "MIT",
   "devDependencies": {
     "nodemon": "^2.0.4"
+  },
+  "repository":{
+    "type": "git",
+    "url": "https://github.com/duncan2148/node-apps-duncan-costello"
   }
 }
