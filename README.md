@@ -1,5 +1,5 @@
-# [Duncan Costello] First steps with git and node
+#  First steps with git and node
 # node-apps-duncan-costello
 
-## my first apps part one
+# my first apps part one
 
