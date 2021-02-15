@@ -8,10 +8,13 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 
-app.use('/public', express.static(`${process.cwd()}/public`));
+app.use('/public', express.static(__dirname + "/public"));
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/views/index.html');
+});
+app.get('/url-shortener', function(req, res) {
+  res.sendFile(__dirname + '/views/url-shortener.html');
 });
 
 // Your first API endpoint
