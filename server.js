@@ -28,10 +28,13 @@ app.post('/api/shorturl/new', (req, res)=>{
   const {url} = req.body
   let validate = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
   let result = validate.test(url)
+  const id = () => {
+    return Math.floor(Math.random() * 10)
+  }
   if(result){
-    res.json({ original_url: url, short_url: 1 });
+    res.json({ "original_url": url, "short_url": id() });
   } else {
-    res.json({ error: "invalid url" });
+    res.json({ "error": "invalid url" });
   }
 
 })
