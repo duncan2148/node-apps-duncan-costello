@@ -3,6 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+mongoose.connect(process.env.DB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // middleware and basic setup
 const port = process.env.PORT || 3000;
