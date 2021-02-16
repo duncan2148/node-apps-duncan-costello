@@ -69,7 +69,6 @@ app.post('/api/shorturl/new', (req, res)=>{
       res.redirect(redir);
     });
 
-    //res.json({"suffix": suffix})
   });
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
