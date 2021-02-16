@@ -65,7 +65,8 @@ app.post('/api/shorturl/new', (req, res)=>{
     const { suffix } = req.params;
     let userRequestedURL = suffix;
     ShortURL.find({ suffix: userRequestedURL }).then((foundUrls) => {
-      res.redirect(foundUrls[0].original_url);
+      let redir = foundUrls[0].original_url;
+      res.redirect(redir);
     });
 
     //res.json({"suffix": suffix})
