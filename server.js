@@ -4,11 +4,18 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const shortid = require('shortid');
+//const mongo = require('mongodb');
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 });
-
+const Schema = mongoose.Schema;
+let ShortURL = mongoose.model("ShortURL", new Schema({
+  "short_url": String,
+  "original_url": String,
+  "suffix": String
+}))
 // middleware and basic setup
 const port = process.env.PORT || 3000;
 
@@ -33,17 +40,36 @@ app.post('/api/shorturl/new', (req, res)=>{
   const {url} = req.body
   let validate = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
   let result = validate.test(url)
-  const id = () => {
-    return Math.floor(Math.random() * 10)
-  }
-  if(result){
-    res.json({ original_url: url, short_url: id() });
-  } else {
-    res.json({ "error": "invalid url" });
-  }
-
+ 
+  let suffix = shortid.generate();
+  let baseURL = url;
+  let short = suffix
+ 
+    let newURL = new ShortURL({
+      "short_url": "/api/shorturl/" + suffix,
+      "original_url": baseURL,
+      "suffix": suffix
+    });
+    newURL.save((err, data)=> {
+      if(err){
+        console.log(err)
+      }
+      res.json({
+        original_url: newURL.original_url,
+        short_url: newURL.short_url,
+        suffix: newURL.suffix,
+      });
+    })
 })
+  app.get("/api/shorturl/:suffix", (req, res) => {
+    const { suffix } = req.params;
+    let userRequestedURL = suffix;
+    ShortURL.find({ suffix: userRequestedURL }).then((foundUrls) => {
+      res.redirect(foundUrls[0].original_url);
+    });
 
+    //res.json({"suffix": suffix})
+  });
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 });
