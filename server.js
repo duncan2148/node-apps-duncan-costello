@@ -44,22 +44,26 @@ app.post('/api/shorturl/new', (req, res)=>{
   let suffix = shortid.generate();
   let baseURL = url;
   let short = suffix
- 
-    let newURL = new ShortURL({
-      "short_url": "/api/shorturl/" + suffix,
-      "original_url": baseURL,
-      "suffix": suffix
-    });
-    newURL.save((err, data)=> {
-      if(err){
-        console.log(err)
-      }
-      res.json({
-        original_url: newURL.original_url,
-        short_url: newURL.short_url,
-        suffix: newURL.suffix,
-      });
-    })
+  if(result){
+     let newURL = new ShortURL({
+       short_url: "/api/shorturl/" + suffix,
+       original_url: baseURL,
+       suffix: suffix,
+     });
+     newURL.save((err, data) => {
+       if (err) {
+         console.log(err);
+       }
+       res.json({
+         original_url: newURL.original_url,
+         short_url: newURL.short_url,
+         suffix: newURL.suffix,
+       });
+     });
+  } else {
+    res.json({error: "invalid url"})
+  }
+   
 })
   app.get("/api/shorturl/:suffix", (req, res) => {
     const { suffix } = req.params;
